@@ -1,0 +1,93 @@
+@model Lobby
+<div class="row">
+    <div class="col-xs-12">
+        <form class="form-white form-margin" asp-action="CreateLobby" asp-controller="Matchmaking" method="post">
+            <h1>Create Lobby</h1>
+            <hr>
+            <div class="validation-summary" asp-validation-summary="All"></div>
+            <div class="form-group">
+                <input asp-for="GameTitle" type="text" placeholder="Game Title">
+            </div>
+            <div class="form-group">
+                <select asp-for="Console" class="form-control">
+                    <option>Playstation</option>
+                    <option>Xbox</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input asp-for="Gamertag" type="text" placeholder="Gamertag">
+            </div>
+            <div class="form-group">
+                <label asp-for="NumPlayers">Number of Players</label>
+                <select asp-for="NumPlayers"class="form-control">
+                    @for(int player = 1; player < 8; player++)
+                    {
+                        <option>@player</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <textarea asp-for="Description" class="form-control" cols="30" rows="3" placeholder="Description (optional)"></textarea>
+            </div>
+            <div class="form-group">
+                <ul class="checkbox-list">
+                    <li class="li-inline">
+                        <div>
+                            <input asp-for="Tags" type="checkbox" id="mic" name="allTags" value="#Mic">
+                            <label asp-for="Tags" class="label-tag">#Mic</label>
+                        </div>
+                    </li>
+                    <li class="li-inline">
+                        <div>
+                            <input asp-for="Tags" type="checkbox" id="noMic" name="allTags" value="#NoMic">
+                            <label asp-for="Tags" class="label-tag">#NoMic</label>
+                        </div>
+                    </li>
+                    <li class="li-inline">
+                        <div>
+                            <input asp-for="Tags" type="checkbox" id="competitive" name="allTags" value="#Competitive">
+                            <label asp-for="Tags" class="label-tag">#Competitive</label>
+                        </div>
+                    </li>
+                    <li class="li-inline">
+                        <div>
+                            <input asp-for="Tags" type="checkbox" id="casual" name="allTags" value="#Casual">
+                            <label asp-for="Tags" class="label-tag">#Casual</label>
+                        </div>
+                    </li>
+                    <li class="li-inline">
+                        <div>
+                            <input asp-for="Tags" type="checkbox" id="co-op" name="allTags" value="#Co-Op">
+                            <label asp-for="Tags" class="label-tag">#Co-Op</label>
+                        </div>
+                    </li>
+                    <li class="li-inline">
+                        <div>
+                            <input asp-for="Tags" type="checkbox" id="clanRecruitment" name="allTags" value="#ClanRecruitment">
+                            <label asp-for="Tags" class="label-tag">#ClanRecruitment</label>
+                        </div>
+                    </li>
+                    <li class="li-inline">
+                        <div>
+                            <input asp-for="Tags" type="checkbox" id="sherpa" name="allTags" value="#Sherpa">
+                            <label asp-for="Tags" class="label-tag">#Sherpa</label>
+                        </div>
+                    </li>
+                    <li class="li-inline">
+                        <div>
+                            <input asp-for="Tags" type="checkbox" id="adultsOnly" name="allTags" value="#AdultsOnly">
+                            <label asp-for="Tags" class="label-tag">#AdultsOnly</label>
+                        </div>
+                    </li>
+                    <li class="li-inline">
+                        <div>
+                            <input asp-for="Tags" type="checkbox" id="allAges" name="allTags" value="#AllAges">
+                            <label asp-for="Tags" class="label-tag">#AllAges</label>
+                        </div>
+                    </li>
+                </ul>             
+            </div>
+            <button class="btn btn-primary text-uppercase">Create</button>
+        </form>
+    </div>
+</div>

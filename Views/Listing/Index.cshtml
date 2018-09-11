@@ -1,0 +1,158 @@
+@model LobbyModels
+<div class="row">
+    <div class="col-xs-12 text-center">
+        <h1 class="h1-white">Playstation <span><i class="fab fa-playstation"></i></span></h1>
+        <a href="#xbox">Jump to Xbox</a>
+        <hr>
+    </div>
+</div>
+<!-- Playstation Lobbies -->
+@if(Model.PlaystationLobbies.Count < 1)
+{
+    @if(Model.XboxLobbies.Where(lobby => lobby.UserID == Model.User.ID).SingleOrDefault() != null)
+    {
+        <div class="row row-lobby">
+            <div class="col-xs-12 text-center">
+                <p>No recent acitivty at this time.</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row row-lobby">
+            <div class="col-xs-12 text-center">
+                <p>No recent acitivty at this time. <span><a href="/matchmaking">Start a Lobby!</a></span></p>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="row">
+        <div class="col-xs-12">
+            <form class="form-inline" id="playstationFilter" asp-action="PlaystationJSON" asp-controller="Listing" method="post">
+                <div class="form-group mb-2">
+                    <input name="playstationTitle" class="form-control" type="text" placeholder="Filter by Title...">
+                </div>
+                <button type="submit" class="btn btn-primary text-uppercase"><span><i class="fas fa-filter"></i></span> Filter</button>
+            </form>
+        </div>
+    </div>
+    <div class="playstation-container">
+        @foreach(var lobby in Model.PlaystationLobbies)
+        {
+            <div class="row row-lobby">
+                <div class="col-xs-3 col-scroll">
+                    <a href="http://my.playstation.com/profile/@lobby.Gamertag">@lobby.Gamertag</a>
+                    <p><span><i class="fab fa-playstation"></i></span></p>
+                </div>
+                <div class="col-xs-2">
+                    <p>Need</p>
+                    <p>@lobby.NumPlayers</p>
+                </div>
+                <div class="col-xs-4 col-scroll">
+                    <p>@lobby.GameTitle</p>
+                    <p>@lobby.Description</p>
+                    <p>@lobby.Tags</p>
+                </div>
+                <div class="col-xs-3 col-scroll">
+                    @if(@DateTime.Now <= lobby.CreatedAt.AddMinutes(1))
+                    {
+                        <p>Posted now</p>
+                    }
+                    else if(@DateTime.Now >= lobby.CreatedAt.AddMinutes(1) && @DateTime.Now <= lobby.CreatedAt.AddMinutes(60))
+                    {
+                        var timeLapsed = @DateTime.Now - @lobby.CreatedAt;
+                        <p>@timeLapsed.Minutes min(s) ago</p>
+                    }
+                    else if(@DateTime.Now > lobby.CreatedAt.AddHours(1))
+                    {
+                        <p>Over an hour ago</p>
+                    }
+                    @if(lobby.UserID == @Model.User.ID)
+                    {
+                        <a href="/matchmaking/@lobby.ID/remove">Remove</a>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+}
+<!-- Xbox Lobbies -->
+<div class="row" id="xbox">
+    <div class="col-xs-12 text-center">
+        <h1 class="h1-white">Xbox <span><i class="fab fa-xbox"></i></span></h1>
+        <hr>
+    </div>
+</div>
+@if(Model.XboxLobbies.Count < 1)
+{
+     @if(Model.PlaystationLobbies.Where(lobby => lobby.UserID == Model.User.ID).SingleOrDefault() != null)
+     {
+         <div class="row row-lobby">
+            <div class="col-xs-12 text-center">
+                <p>No recent acitivty at this time.</p>
+            </div>
+        </div>
+     }
+     else
+     {
+         <div class="row row-lobby">
+            <div class="col-xs-12 text-center">
+                <p>No recent acitivty at this time. <span><a href="/matchmaking">Start a Lobby!</a></span></p>
+            </div>
+        </div>   
+     }
+}
+else
+{
+    <div class="row">
+        <div class="col-xs-12">
+            <form class="form-inline" id="xboxFilter" asp-action="XboxJSON" asp-controller="Listing" method="post">
+                <div class="form-group mb-2">
+                    <input name="xboxTitle" class="form-control" type="text" placeholder="Filter by Title...">
+                </div>
+                <button type="submit" class="btn btn-primary text-uppercase"><span><i class="fas fa-filter"></i></span> Filter</button>
+            </form>
+        </div>
+    </div>
+    <div class="xbox-container">
+        @foreach(var lobby in Model.XboxLobbies)
+        {
+            <div class="row row-lobby">
+                <div class="col-xs-3 col-scroll">
+                    <a href="https://account.xbox.com/en-us/profile?gamertag=@lobby.Gamertag">@lobby.Gamertag</a>
+                    <p><span><i class="fab fa-xbox"></i></p>
+                </div>
+                <div class="col-xs-2">
+                    <p>Need</p>
+                    <p>@lobby.NumPlayers</p>
+                </div>
+                <div class="col-xs-4 col-scroll">
+                    <p>@lobby.GameTitle</p>
+                    <p>@lobby.Description</p>
+                    <p>@lobby.Tags</p>
+                </div>
+                <div class="col-xs-3 col-scroll">
+                    @if(@DateTime.Now <= lobby.CreatedAt.AddMinutes(1))
+                    {
+                        <p>Posted now</p>
+                    }
+                    else if(@DateTime.Now >= lobby.CreatedAt.AddMinutes(1) && @DateTime.Now <= lobby.CreatedAt.AddMinutes(60))
+                    {
+                        var timeLapsed = @DateTime.Now - @lobby.CreatedAt;
+                        <p>@timeLapsed.Minutes min(s) ago</p>
+                    }
+                    else if(@DateTime.Now > lobby.CreatedAt.AddHours(1))
+                    {
+                        <p>Over an hour ago</p>
+                    }
+                    @if(lobby.UserID == @Model.User.ID)
+                    {
+                        <a href="/matchmaking/@lobby.ID/remove">Remove</a>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+}

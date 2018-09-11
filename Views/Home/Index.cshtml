@@ -1,0 +1,31 @@
+@model Lobby
+<div class="row">
+    <img src="~/images/EA-Games.jpg" alt="" width=100%>
+</div>
+<div class="row">
+    @if(Model == null)
+    {
+        <div class="col-xs-12 col-sm-6 col-action text-center">
+            <div class="action-div">
+                <h1>Create a Lobby</h1>
+                <h1><span><a class="link-black" href="/matchmaking"><span><i class="fas fa-plus"></i></span></a></span></h1>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="col-xs-12 col-sm-6 col-action text-center">
+            <div class="action-div">
+                <h1>Remove Current Lobby</h1>
+                <h1><span><a class="link-black" href="/matchmaking/@Model.ID/remove"><span><i class="fas fa-sign-in-alt"></i></a></span></h1>
+            </div>
+        </div>
+    }
+    <div class="col-xs-12 col-sm-6 col-action text-center">
+        <div class="action-div">
+            <h1>Find a Lobby</h1>
+            <h1><span><a class="link-black" href="/lobbies"><span><i class="fas fa-search"></i></span></a></span></h1>
+        </div>
+    </div>
+</div>
+
