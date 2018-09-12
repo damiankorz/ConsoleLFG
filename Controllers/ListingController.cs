@@ -34,7 +34,7 @@ namespace ConsoleLFG.Controllers
             List<Lobby> expiredLobbies = _dBContext.Lobbies
                                             .Where(lobby => lobby.CreatedAt < DateTime.Now.AddHours(-2))
                                             .ToList();          
-            //Remove each expried lobby from database    
+            //Remove each expired lobby from database    
             foreach(Lobby lobby in expiredLobbies)
             {
                 _dBContext.Remove(lobby); 
